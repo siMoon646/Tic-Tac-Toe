@@ -1,0 +1,8 @@
+@font-face {
+    font-family: "Minefont";
+    src: url(fonts/minecraftfont.woff) format("woff");
+}
+
+.firstHeader{
+    font: 10rem "Minefont";
+}
