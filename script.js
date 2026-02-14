@@ -1,7 +1,3 @@
-let titleElements = ["tic", "tac", "toe"];
-
-let arr = [];
-
 function generateRandomInt(min, max){
     if(typeof min !== "number" || typeof max !== "number"){
         console.log(typeof min);
@@ -10,43 +6,25 @@ function generateRandomInt(min, max){
     }
     return (Math.floor(Math.random() * (max - min + 1) + min));
 }
+/**
+ * Given an array of Strings, the checkCompletenessFunction checks if all elements of an array are present as substrings in the string
+ * passed as an argument.
+ * @param {String} str 
+ * @returns true if str contains all elements of 
+ */
 
-function checkCompleteness(str){
-    let completeness = 0;
-
-    if(typeof str !== "string"){
-        throw new TypeError("Expected argument type: String ");
-    }
-
-    for(let i = 0; i < 2; i++){
-        if(str.includes(titleElements[i])){
-            completeness++;
-        }
-    }
-    if(completeness === 2){
-        return true;
-    }
-    return false;
-}
-
+/**
+ * Randomly picks the sequence of 'tic', 'tac', and 'toe' to appear in the title
+ * @returns String representing a randomized sequence of 'tic', 'tac' and 'toe'
+ */
 function generateHeaderString(){
-    titleElements = ["tic", "tac", "toe"];
+    titleElements = ["Tic", "Tac", "Toe"];
     let headerString = "";
     let headerStringIncomplete = true;
     let start = 0;
     let end = titleElements.length - 1;
-    while(headerStringIncomplete){
-        
-        // let temp = titleElements[generateRandomInt(0, 2)];
-        // if(!headerString.includes(temp)){
-        //     headerString = headerString.concat(temp);
-        // }
-        // if(checkCompleteness(headerString)){
-        //     headerStringIncomplete = false;
-        // } else {
 
-        //     headerString = headerString.concat("-");
-        // }
+    while(headerStringIncomplete){
 
         headerString = headerString.concat(titleElements.splice(generateRandomInt(start,end--),1)[0]);
 
@@ -57,13 +35,29 @@ function generateHeaderString(){
         }
     }
     return headerString;
-
 }
 
-let headerString = generateHeaderString();
-console.log(headerString);
-// console.log(checkCompleteness("toe-tac-tic"));
+let titleButton = document.getElementById("title");
 
-for(let i = 0; i < 50; i++){
-    console.log(generateHeaderString());
-}
+titleButton.addEventListener("click", (e)=>{
+    
+    // console.log(e.target.id);
+    // console.dir(titleButton);
+
+    // Regenerates title if it's the same as the previous.
+    let headerString = generateHeaderString();
+    while(headerString === titleButton.innerText){
+        headerString = generateHeaderString();
+    }
+    titleButton.innerText = headerString;
+
+});
+
+titleButton.addEventListener("mouseover", (e)=>{
+    titleButton.style.borderColor = "lightgray";
+});
+
+titleButton.addEventListener("mouseout", (e)=>{
+    titleButton.style.borderColor = "cyan";
+})
+

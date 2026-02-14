@@ -3,6 +3,48 @@
     src: url(fonts/minecraftfont.woff) format("woff");
 }
 
-.firstHeader{
+body{
+    background: rgb(0,0,25);
+}
+
+.bordered{
+    border-radius: 1rem;
+    box-shadow: .5em .5em rgb(100,255,255,.8);
+    border: 1em ridge rgb(100,200,255,.7);
+}
+
+.gameContainer{
+    width: fit-content;
+    margin: 2rem auto;
+    padding: 1rem 5rem 1rem 5rem;
+    background-color: rgb(255,255,255,.10);
+    justify-content: center;
+}
+
+.title{
     font: 10rem "Minefont";
+    text-shadow: .04em .04em darkcyan;
+    color: cyan;
+    margin: 0rem;
+    cursor: pointer;
+}
+
+.title:hover{
+    color: rgb(0,100,255);
+    text-shadow: -.04em -.04em white;
+    user-select: none;
+}
+
+.decoratedHR{
+    background-color: cyan;
+    width: 66%;
+    height: 1rem;
+}
+
+.grid{
+    color: white;
+    background-color: green;
+    border-radius: 1rem; 
+    border: .25 ridge lime;
+    font: 100% "Minefont";
 }
