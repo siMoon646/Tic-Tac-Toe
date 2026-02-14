@@ -81,6 +81,7 @@ function checkHorizontal(gridData){
         let match = hArr.every( x => x === hArr[0] && x !== undefined);
         // if any row is a winning sequence, return true
         if(match){
+            console.log(hArr, match);
             return true;
         }
         // current row is not a winning sequence, clear hArr to prep for the next row
@@ -112,13 +113,33 @@ function checkVertical(gridData){
     return false;
 }
 
-function checkDiag(){
-
+function checkDiags(gridData){
+    console.log("diag");
+    let diagArr = [];
+    for(let i = 0; i < gridData.length; i++){
+        diagArr.push(gridData[i][i]);
+    }
+    let match = diagArr.every( x => x === diagArr[0] && x !== undefined);
+    console.log(diagArr, match);
+    if(match){
+        return true; 
+    }
+    diagArr = [];
+    
+    for(let i = gridData.length - 1; i > 0; i--){
+        diagArr.push(gridData[gridData.length - i - 1][i]);
+    }
+    match = diagArr.every( x => x === diagArr[0] && x !== undefined);
+    console.log(diagArr, match);
+    if(match){   
+        return true; 
+    }
+    return false;
 }
 
 function checkWin(gridData){
     console.log(gridData);
-    return checkHorizontal(gridData) || checkVertical(gridData);
+    return checkHorizontal(gridData) || checkVertical(gridData) || checkDiags(gridData);
 }
 
 grid.addEventListener("click", (e)=>{
