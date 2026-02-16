@@ -166,7 +166,12 @@ function checkWin(gridData){
             victorText.innerText = "WINNER: PLAYER X";
         }
         return true;
-    }
+    } 
+    if ([...document.querySelectorAll(".cell")].every((cell) => cell.textContent !== "")){
+        console.log("tie");
+        victorText.innerText = "TIE!";
+        return true;
+        }
     return false;
 }
 }
