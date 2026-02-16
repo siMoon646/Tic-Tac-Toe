@@ -4,64 +4,88 @@
 }
 
 body{
-    background: rgb(0,0,25);
+    background: rgb(1, 11, 20);
 }
 
 .gameContainer{
     width: fit-content;
-    margin: 1.25rem auto;
-    padding: 1rem 5rem 1rem 5rem;
+    margin: 1.25vw auto;
+    padding: 1vw 5vw 1vw 5vw;
     background-color: rgb(255,255,255,.10);
     text-align: center;
-    border-radius: 1rem;
-    box-shadow: .5em .5em rgb(100,255,255,.8);
-    border: 2rem ridge rgb(100,200,255,.7);
+    border-radius: 1vw;
+    box-shadow: .5vw .5vw rgb(100,255,255,.8);
+    border: 2vw ridge rgb(100,200,255,.7);
 }
 
 .title{
-    font: 10rem "Minefont";
-    text-shadow: .04em .04em darkcyan;
+    font: 10vw "Minefont";
+    text-shadow: .4vw .4vw darkcyan;
     color: cyan;
-    margin: 0rem;
-    cursor: pointer;
+    margin: 0vw;
 }
 
 .title:hover{
+    cursor: pointer;
     color: rgb(0,100,255);
-    text-shadow: -.04em -.04em white;
+    text-shadow: -.4vw -.4vw white;
     user-select: none;
 }
 
 .dottedHR{
     width: 100%;
     border: none;
-    border-top: 1rem dotted cyan;
+    border-top: 1vw dotted cyan;
 }
 
 .grid{
-    border-radius: 1rem; 
-    border-spacing: 1rem;
+    border-radius: 1vw; 
+    border-spacing: 1vw;
 }
 
 .cell{
     color: cyan;
-    font: 7rem "Minefont";
+    font: 7vw "Minefont";
     text-align: center;
-    text-shadow: .04em .04em darkcyan;
-    border: .5rem ridge white;
+    text-shadow: .4vw .4vw darkcyan;
+    border: .5vw ridge white;
     height: 11vw;
     width: 11vw;
-    margin: 1rem auto;
+    margin: 1vw auto;
 }
 
 .cell:hover{
-    box-shadow: -.05em -.05em rgb(100,255,255,.8);
+    box-shadow: -.5vw -.5vw rgb(100,255,255,.8);
     cursor: pointer;
     user-select: none;
 }
 
 .turnTracker{
-    font: 2rem "Minefont";
+    font: 2vw "Minefont";
     color: white;
 }
 
+.playAgainButton{
+    font: 5vw "Minefont";
+    color: cyan;
+    text-shadow: .4vw .4vw darkcyan;
+    border:1vw ridge rgb(100,200,255,.7);
+    padding: 1vw 1vw 1vw 1vw;
+    background-color: rgb(255,255,255,.10);
+}
+
+.playAgainButton:hover{
+    cursor: pointer;
+    user-select: none;
+    box-shadow: -.5vw -.5vw rgb(100,255,255,.8)
+}
+
+.victorText{
+    font: 8vw "Minefont";
+    color: cyan;
+    text-shadow: .4vw .4vw white;
+}
+
+.hidden{
+    display: none;
+}

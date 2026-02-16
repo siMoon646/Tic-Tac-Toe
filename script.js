@@ -31,9 +31,9 @@ function generateHeaderString(){
     return headerString;
 }
 
-let titleButton = document.getElementById("title");
+const titleButton = document.querySelector("#title");
 
-{ /* functions for aesthetic purposes */
+{ /* eventListerners for aesthetic purposes */
 titleButton.addEventListener("mouseover", (e)=>{
     titleButton.style.borderColor = "lightgray";
 });
@@ -43,7 +43,7 @@ titleButton.addEventListener("mouseout", (e)=>{
 })
 }
 
-// Randomizes the header when clicked
+// Randomizes the header when clicking on it
 titleButton.addEventListener("click", (e)=>{
     
     // console.log(e.target.id);
@@ -58,15 +58,19 @@ titleButton.addEventListener("click", (e)=>{
 
 });
 
-let grid = document.getElementById("grid");
-let playerTurn = 0;
+// Progresses the game and changes the notification text below the grid
+function changeTurn(){
+    // if the turncounter is even, it's O's turn, X's otherwise.
+    playerTurn++;
+    if (playerTurn%2 === 0){
+        turnTracker.innerText = "Player Turn: O";
+    } else {
+        turnTracker.innerText = "Player Turn: X";
+    }
+    return playerTurn;
+}
 
-let gridData = [
-    [],
-    [],
-    []
-];
-
+{ // functions pertaining to checking for wins:
 // method for checking if any row is a winning sequence
 function checkHorizontal(gridData){
     console.log("hor");
@@ -113,49 +117,117 @@ function checkVertical(gridData){
     return false;
 }
 
+// method to checks the diagonals of the grid for winning sequences
 function checkDiags(gridData){
     console.log("diag");
+    // array stores one diagonal at a time
     let diagArr = [];
+    // storing the top-left to down-right diagonal
     for(let i = 0; i < gridData.length; i++){
         diagArr.push(gridData[i][i]);
     }
-    let match = diagArr.every( x => x === diagArr[0] && x !== undefined);
+    // match is a boolean that represents if the diagonal is a winning sequence
+    let match = diagArr.every( x => x === diagArr[0] && x !== undefined && diagArr.length > 2);
     console.log(diagArr, match);
+    // match represents a winning sequence, return true
     if(match){
         return true; 
     }
+
+    // clearing the array for the only other possible diagonal
     diagArr = [];
     
-    for(let i = gridData.length - 1; i > 0; i--){
-        diagArr.push(gridData[gridData.length - i - 1][i]);
+    for(let i = gridData.length - 1; i >= 0; i--){
+        diagArr.push(gridData[i][gridData.length -1 -i])
     }
+
+    // match is a boolean that represents if the diagonal is a winning sequence
     match = diagArr.every( x => x === diagArr[0] && x !== undefined);
     console.log(diagArr, match);
+    // match represents a winning sequence, return true
     if(match){   
         return true; 
     }
+
+    // no diagonal is a winning sequence, return false
     return false;
 }
 
+// checks if there is a winning sequence on the board
+const victorText = document.querySelector("#victorText");
 function checkWin(gridData){
     console.log(gridData);
-    return checkHorizontal(gridData) || checkVertical(gridData) || checkDiags(gridData);
+    if(checkHorizontal(gridData) || checkVertical(gridData) || checkDiags(gridData)){
+        if(playerTurn %2 === 0){
+            console.log("O WON");
+            victorText.innerText = "WINNER: PLAYER O";
+        } else {
+            console.log("X WON");
+            victorText.innerText = "WINNER: PLAYER X";
+        }
+        return true;
+    }
+    return false;
+}
 }
 
+// array used to store the state of the game as it appears on the document
+let gridData;
+let playerTurn;
+// Counts the number of turns that have passed (unrelated to which player will play next): 
+const turnTracker = document.querySelector("#turnTracker");
+let playedTurns;
+startGame();
+function startGame(){
+    gridData = [[],[],[]];
+    // Randomized the starting player
+    playerTurn = generateRandomInt(0,1);
+    changeTurn(playerTurn);
+    playedTurns = 0;    
+}
+
+const playAgainButton = document.querySelector("#playAgainButton");
+// restarts the game:
+playAgainButton.addEventListener("click", (e)=>{
+    // starts the game:
+    startGame();
+    playAgainButton.classList.add("hidden");
+    grid.classList.remove("hidden");
+    turnTracker.classList.remove("hidden");
+    victorText.classList.add("hidden");
+
+    const cells = document.querySelectorAll(".cell");
+    cells.forEach(cell => {
+        cell.textContent = "";
+    })
+});
+
+const grid = document.querySelector("#grid");
 grid.addEventListener("click", (e)=>{
-    // console.dir(e);
+    // prevents players from modifying the contents of cells that are already marked
     if(e.target.innerText === ""){
-        if(playerTurn %2 === 0){
+        if((playerTurn) %2 === 0){
             e.target.innerText = "O";
             gridData[e.target.id[0]][e.target.id[1]] = "O";
         }
-        if(playerTurn %2 === 1){
+        if((playerTurn)%2 === 1){
             e.target.innerText = "X";
             gridData[e.target.id[0]][e.target.id[1]] = "X";
         }
-        if(playerTurn >= 4){
-            console.log(checkWin(gridData));
+
+        playedTurns++;
+        // no winning sequences are possible until the fifth turn of the game
+        if(playedTurns >= 5){
+            if(checkWin(gridData)){
+                grid.classList.add("hidden");
+                turnTracker.classList.add("hidden");
+                playAgainButton.classList.remove("hidden");
+                victorText.classList.remove("hidden");
+            }
         }
-        playerTurn++;
+        // counter used to track player turns
+        playerTurn = changeTurn();
     }
 });
+
+
